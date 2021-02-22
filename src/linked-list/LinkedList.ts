@@ -47,7 +47,7 @@ export default class LinkedList<T> {
     currentNode.next = newNode
   }
 
-  findPrev (item: T) {
+  findPrev(item: T) {
     let currentNode = this.head
     while (currentNode.next !== null && currentNode.next.value !== item) {
       currentNode = currentNode.next
@@ -58,12 +58,64 @@ export default class LinkedList<T> {
     return currentNode
   }
 
-  remove (item: T) {
+  remove(item: T) {
     const prevNode = this.findPrev(item)
     if (prevNode) {
       console.log('未找到元素')
       return
     }
     prevNode.next = prevNode.next.next
+  }
+
+  reverse() {
+    const root = new LinkedNode<T>()
+    let currentNode = this.head.next
+    while (currentNode) {
+      const next = currentNode.next
+      currentNode.next = root.next
+      root.next = currentNode
+      currentNode = next
+    }
+    this.head = root
+  }
+
+  checkCircle() {
+    let fast = this.head.next
+    let slow = this.head
+    while (fast !== null && fast.next !== null) {
+      fast = fast.next.next
+      slow = slow.next
+      if (slow === fast) {
+        return true
+      }
+    }
+    return fast
+  }
+
+  removeByIndexFromEnd(index: number) {
+    if (this.checkCircle()) return false
+    let pos: number = 1
+    this.reverse()
+    let currentNode = this.head.next
+    while (currentNode !== null && pos < index) {
+      currentNode = currentNode.next
+      pos++
+    }
+    if (currentNode === null) {
+      console.log('无法删除最后一个节点或者该节点不存在')
+      return false
+    }
+    this.remove(currentNode.value)
+    this.reverse()
+  }
+
+  findMiddleNode() {
+    let fast = this.head
+    let slow = this.head
+    while (fast.next && fast.next.next) {
+      fast = fast.next.next
+      slow = slow.next
+    }
+    return slow
   }
 }
