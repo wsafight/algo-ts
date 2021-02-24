@@ -668,3 +668,6 @@ function arraycopy(s,spos,d,dpos,len){
     d[dpos+len]=a[len];
   }
 }
+
+// https://github.com/bellbind/stepbystep-timsort
+// timSort 是工业级的排序算法
