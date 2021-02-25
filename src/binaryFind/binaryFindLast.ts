@@ -9,9 +9,9 @@ export default function binaryFindLast(sortedArr: number[], target: number) {
   let high = len - 1
   while (low <= high) {
     const mid = Math.floor((high - low) / 2 + low)
-    if (target < sortedArr[mid]) [
+    if (target < sortedArr[mid]) {
       high = mid - 1
-    ] else if (target > sortedArr[mid]) {
+    } else if (target > sortedArr[mid]) {
       low = mid + 1
     } else {
       if (mid === len - 1 || sortedArr[mid + 1] > target) {
