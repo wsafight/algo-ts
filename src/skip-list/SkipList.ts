@@ -1,7 +1,9 @@
 import SkipListNode, { MAX_SKIP_NODE_LEVEL } from "./SkipListNode";
 
 export default class SkipList<T> {
+  /** head属性是一个Node类的实例，指向整个链表的开始 */
   head: SkipListNode<T>
+  /** levelCount属性表示了当前跳表索引的总共级数 */
   levelCount: number
 
   constructor() {
@@ -9,7 +11,10 @@ export default class SkipList<T> {
     this.levelCount = 1;
   }
 
-  randomLevel() {
+  /**
+   * 跳表里面插入数据的时候，随机生成索引的级数
+   */
+  static randomLevel() {
     let level = 1;
     for (let i = 1; i < MAX_SKIP_NODE_LEVEL; i++) {
       if (Math.random() < 0.5) {
@@ -20,7 +25,7 @@ export default class SkipList<T> {
   }
 
   insert(value:T) {
-    const level = this.randomLevel();
+    const level = SkipList.randomLevel();
     const newNode = new SkipListNode({
       data: value,
       maxLevel: level
