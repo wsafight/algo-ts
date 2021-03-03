@@ -41,4 +41,42 @@ export default class SkipList<T> {
       this.levelCount = level;
     }
   }
+
+  find(value: T) {
+    if(!value){return null}
+    let p = this.head;
+    for(let i = this.levelCount - 1; i >= 0; i--) {
+      while(p.refer[i] !== undefined && p.refer[i].data < value) {
+        p = p.refer[i];
+      }
+    }
+
+    if(p.refer[0] !== undefined && p.refer[0].data === value) {
+      return p.refer[0];
+    }
+    return null;
+  }
+
+  remove(value: T) {
+    let _node;
+    let p: SkipListNode<T> = this.head;
+    const update = new Array(new SkipListNode());
+    for(let i = this.levelCount - 1; i >= 0; i--) {
+      while(p.refer[i] !== undefined && p.refer[i].data < value){
+        p = p.refer[i];
+      }
+      update[i] = p;
+    }
+
+    if(p.refer[0] !== undefined && p.refer[0].data === value) {
+      _node = p.refer[0];
+      for(let i = 0; i <= this.levelCount - 1; i++) {
+        if(update[i].refer[i] !== undefined && update[i].refer[i].data === value) {
+          update[i].refer[i] = update[i].refer[i].refer[i];
+        }
+      }
+      return _node;
+    }
+    return null;
+  }
 }
